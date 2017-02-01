@@ -206,6 +206,36 @@ class Project extends \yii\db\ActiveRecord implements \bscheshirwork\yii2-cubs\b
 
 ```
 
+#Customize
+
+Create your own interface and use it.
+`my\base\CubsDefaultInterface.php`
+```
+<?php
+
+namespace my\cubs\base;
+
+interface CubsDefaultInterface
+{
+    const FIELD_CREATE_AT = 'created_at';
+    const FIELD_CREATE_BY = 'created_by';
+    const FIELD_UPDATE_AT = 'updated_at';
+    const FIELD_UPDATE_BY = 'updated_by';
+    const FIELD_BLOCKED_AT = 'blocked_at';
+    const FIELD_STATE = 'status';
+    const STATE_DISABLED = 0b00;
+    const STATE_ENABLED = 0b01;
+    const STATE_BLOCKED = 0b10;
+    const STATE_PROCESS = 0b100;
+    const LIST_STATE = [
+        self::STATE_DISABLED => 'DISABLED',
+        self::STATE_ENABLED => 'ACTIVE',
+        self::STATE_BLOCKED => 'BLOCKED',
+        self::STATE_PROCESS => 'PROCESS',
+    ];
+}
+```
+
 
 [Info](docs/cubs.md)
 
