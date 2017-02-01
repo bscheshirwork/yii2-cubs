@@ -236,6 +236,8 @@ interface CubsDefaultInterface
 }
 ```
 
+The migrations for the existing tables must be created manually. 
+
 
 [Info](docs/cubs.md)
 
