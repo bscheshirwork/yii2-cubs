@@ -23,6 +23,15 @@ class Generator extends BaseGenerator
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+        Yii::setAlias('@bscheshirwork/cubs', '@vendor/bscheshirwork/yii2-cubs/src');
+        parent::init();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return array_merge(parent::rules(), [

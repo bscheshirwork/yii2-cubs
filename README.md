@@ -14,8 +14,8 @@ Example `migration` create table
 ```
 <?php
 
-use bscheshirwork\yii2-cubs\base\CubsDefaultInterface;
-use bscheshirwork\yii2-cubs\db\CubsMigrationTrait;
+use bscheshirwork\cubs\base\CubsDefaultInterface;
+use bscheshirwork\cubs\db\CubsMigrationTrait;
 use yii\db\Migration;
 
 class m170130_100000_createProjectTables extends Migration implements CubsDefaultInterface
@@ -100,9 +100,11 @@ settings `config/main-local.php`
         'allowedIPs' => ['*'],
         'generators' => [
             'model' => [ // generator name
-                'class' => 'bscheshirwork\yii2-cubs\generators\model\Generator', // generator class
+                'class' => 'bscheshirwork\cubs\generators\model\Generator', // generator class
                 'templates' => [
-                    'cubs' => '@bscheshirwork/yii2-cubs/generators/model/cubs', // template name => path to template
+                    'default' => '@bscheshirwork/cubs/generators/model/cubs', // default template name => alias and path to template 
+                    // or direct
+                    // 'cubs' => '@vendor/bscheshirwork/yii2-cubs/src/generators/model/cubs', // template name => path to template
                 ]
             ]
         ],
@@ -121,7 +123,7 @@ namespace app\models;
 
 use Yii;
 use Yii\helpers\ArrayHelper;
-use bscheshirwork\yii2-cubs\base\CubsTrait;
+use bscheshirwork\cubs\base\CubsTrait;
 
 /**
  * This is the model class for table "{{%project}}".
@@ -139,7 +141,7 @@ use bscheshirwork\yii2-cubs\base\CubsTrait;
  *
  * @property ProjectForm[] $projectForms
  */
-class Project extends \yii\db\ActiveRecord implements \bscheshirwork\yii2-cubs\base\CubsDefaultInterface
+class Project extends \yii\db\ActiveRecord implements \bscheshirwork\cubs\base\CubsDefaultInterface
 {
     use CubsTrait;
 
