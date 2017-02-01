@@ -1,0 +1,24 @@
+{
+    "name":"bscheshirwork/yii2-cubs",
+    "description":"Trait for AR. Include [create|update][At|By], flags and blockAt fields",
+    "keywords":["AR", "Db", "Yii2", "ActiveRecord", "ActiveRecord", "migration", "gii template"],
+    "type":"library",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"BSCheshir",
+            "email":"bscheshirwork@gmail.com"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "bscheshirwork\\cubs\\": "src\\"
+        }
+    },
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-gii": "~2.0.0"
+    }
+}
