@@ -27,6 +27,13 @@ trait CubsTrait
 {
 
     /**
+     * Stored labels (after merge and translate)
+     * if you need dynamic labels - clear it for refresh
+     * @var array
+     */
+    protected $_attributeLabels = [];
+
+    /**
      * Return list of status names
      * @return mixed
      */
@@ -181,12 +188,12 @@ trait CubsTrait
     public function attributeLabels()
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
-            'createdAt' => Yii::t('app', 'Created At'),
-            'createdBy' => Yii::t('app', 'Created By'),
-            'updatedAt' => Yii::t('app', 'Updated At'),
-            'updatedBy' => Yii::t('app', 'Updated By'),
-            'stateOfFlags' => Yii::t('app', 'State Of Flags'),
-            'blockedAt' => Yii::t('app', 'Blocked At'),
+            'createdAt' => Yii::t('cubs', 'Created At'),
+            'createdBy' => Yii::t('cubs', 'Created By'),
+            'updatedAt' => Yii::t('cubs', 'Updated At'),
+            'updatedBy' => Yii::t('cubs', 'Updated By'),
+            'stateOfFlags' => Yii::t('cubs', 'State Of Flags'),
+            'blockedAt' => Yii::t('cubs', 'Blocked At'),
         ]);
     }
 
@@ -196,12 +203,12 @@ trait CubsTrait
     public function hints()
     {
         return ArrayHelper::merge(parent::hints(), [
-            'createdAt' => Yii::t('app', 'Created at'),
-            'createdBy' => Yii::t('app', 'Author'),
-            'updatedAt' => Yii::t('app', 'Updated at'),
-            'updatedBy' => Yii::t('app', 'Updater'),
-            'stateOfFlags' => Yii::t('app', 'Status of the model'),
-            'blockedAt' => Yii::t('app', 'Blocked at'),
+            'createdAt' => Yii::t('cubs', 'Created at'),
+            'createdBy' => Yii::t('cubs', 'Author'),
+            'updatedAt' => Yii::t('cubs', 'Updated at'),
+            'updatedBy' => Yii::t('cubs', 'Updater'),
+            'stateOfFlags' => Yii::t('cubs', 'Status of the model'),
+            'blockedAt' => Yii::t('cubs', 'Blocked at'),
         ]);
     }
 

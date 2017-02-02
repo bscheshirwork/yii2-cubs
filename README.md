@@ -240,6 +240,26 @@ interface CubsDefaultInterface
 
 The migrations for the existing tables must be created manually. 
 
+#i18n
+
+Example `gii`: 
+settings `config/main.php`
+```
+...
+    'components' => [
+        'i18n' => [
+            'translations' => [
+                'cubs' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@vendor/bscheshirwork/yii2-cubs/messages',
+                ],
+            ],
+        ],
+    ],
+...
+```
+
+
 
 [Info](docs/cubs.md)
 
