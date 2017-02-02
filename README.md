@@ -78,9 +78,9 @@ CREATE TABLE `project_form` (
   `url` text,
   `description` text,
   `createdAt` datetime NOT NULL,
-  `createdBy` datetime DEFAULT NULL,
+  `createdBy` int(11) DEFAULT NULL,
   `updatedAt` datetime DEFAULT NULL,
-  `updatedBy` datetime DEFAULT NULL,
+  `updatedBy` int(11) DEFAULT NULL,
   `stateOfFlags` int(11) NOT NULL DEFAULT '1',
   `blockedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -133,9 +133,9 @@ use bscheshirwork\cubs\base\CubsTrait;
  * @property string $url
  * @property string $description
  * @property string $createdAt
- * @property string $createdBy
+ * @property integer $createdBy
  * @property string $updatedAt
- * @property string $updatedBy
+ * @property integer $updatedBy
  * @property integer $stateOfFlags
  * @property string $blockedAt
  *

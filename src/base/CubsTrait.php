@@ -7,6 +7,7 @@ use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use Yii\helpers\ArrayHelper;
 
 /**
@@ -50,7 +51,7 @@ trait CubsTrait
      */
     public function isEnabled()
     {
-        return ($this->${static::FIELD_STATE} | static::STATE_ENABLED) == $this->${static::FIELD_STATE};
+        return ($this->{static::FIELD_STATE} | static::STATE_ENABLED) == $this->{static::FIELD_STATE};
     }
 
     /**
@@ -59,7 +60,7 @@ trait CubsTrait
      */
     public function isBlocked()
     {
-        return ($this->${static::FIELD_STATE} | static::STATE_BLOCKED) == $this->${static::FIELD_STATE};
+        return ($this->{static::FIELD_STATE} | static::STATE_BLOCKED) == $this->{static::FIELD_STATE};
     }
 
     /**
@@ -69,7 +70,7 @@ trait CubsTrait
      */
     public function isActive()
     {
-        return ($this->${static::FIELD_STATE} & ~static::STATE_BLOCKED | static::STATE_ENABLED) == $this->${static::FIELD_STATE};
+        return ($this->{static::FIELD_STATE} & ~static::STATE_BLOCKED | static::STATE_ENABLED) == $this->{static::FIELD_STATE};
     }
 
     /**
@@ -77,7 +78,7 @@ trait CubsTrait
      */
     public function block()
     {
-        $this->${static::FIELD_STATE} |= static::STATE_BLOCKED;
+        $this->{static::FIELD_STATE} |= static::STATE_BLOCKED;
     }
 
     /**
@@ -85,7 +86,7 @@ trait CubsTrait
      */
     public function unblock()
     {
-        $this->${static::FIELD_STATE} &= ~static::STATE_BLOCKED;
+        $this->{static::FIELD_STATE} &= ~static::STATE_BLOCKED;
     }
 
     /**
@@ -93,7 +94,7 @@ trait CubsTrait
      */
     public function enabled()
     {
-        $this->${static::FIELD_STATE} |= static::STATE_ENABLED;
+        $this->{static::FIELD_STATE} |= static::STATE_ENABLED;
     }
 
     /**
@@ -101,7 +102,7 @@ trait CubsTrait
      */
     public function disabled()
     {
-        $this->${static::FIELD_STATE} &= ~static::STATE_ENABLED;
+        $this->{static::FIELD_STATE} &= ~static::STATE_ENABLED;
     }
 
     /**
@@ -110,7 +111,7 @@ trait CubsTrait
      */
     public function toggleSign($sign = self::STATE_BLOCKED)
     {
-        $this->${static::FIELD_STATE} ^= $sign;
+        $this->{static::FIELD_STATE} ^= $sign;
     }
 
     /**
@@ -126,6 +127,7 @@ trait CubsTrait
                     ActiveRecord::EVENT_BEFORE_INSERT => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT],
                     ActiveRecord::EVENT_BEFORE_UPDATE => [static::FIELD_UPDATE_AT],
                 ],
+                'value' => new Expression('NOW()'),
             ],
             [
                 'class' => BlameableBehavior::className(),
@@ -140,7 +142,7 @@ trait CubsTrait
                     ActiveRecord::EVENT_BEFORE_INSERT => [static::FIELD_BLOCKED_AT],
                     ActiveRecord::EVENT_BEFORE_UPDATE => [static::FIELD_BLOCKED_AT],
                 ],
-                'value' => [$this, 'updateBlockedAt']
+                'value' => [$this, 'getActualBlockedAt']
             ],
         ];
     }
@@ -150,13 +152,13 @@ trait CubsTrait
      * @param $event
      * @return null
      */
-    protected function updateBlockedAt($event)
+    public function getActualBlockedAt($event)
     {
         if ($this->isBlocked())
-            if (empty($this->${static::FIELD_BLOCKED_AT}))
-                return $this->${static::FIELD_UPDATE_AT};
+            if (empty($this->{static::FIELD_BLOCKED_AT}))
+                return $this->{static::FIELD_UPDATE_AT};
             else
-                return $this->${static::FIELD_BLOCKED_AT};
+                return $this->{static::FIELD_BLOCKED_AT};
         else
             return null;
     }
@@ -168,8 +170,8 @@ trait CubsTrait
     {
         return ArrayHelper::merge(parent::rules(), [
             [['createdAt'], 'required'],
-            [['createdAt', 'createdBy', 'updatedAt', 'updatedBy', 'blockedAt'], 'safe'],
-            [['stateOfFlags'], 'integer'],
+            [['createdAt', 'updatedAt', 'blockedAt'], 'safe'],
+            [['createdBy', 'updatedBy', 'stateOfFlags'], 'integer'],
         ]);
     }
 

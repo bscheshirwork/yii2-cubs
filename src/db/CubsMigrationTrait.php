@@ -23,9 +23,9 @@ trait CubsMigrationTrait
     {
         $fields = [
             static::FIELD_CREATE_AT => $this->datetime()->notNull(),
-            static::FIELD_CREATE_BY => $this->datetime()->null(),
+            static::FIELD_CREATE_BY => $this->integer()->null(),
             static::FIELD_UPDATE_AT => $this->datetime()->null(),
-            static::FIELD_UPDATE_BY => $this->datetime()->null(),
+            static::FIELD_UPDATE_BY => $this->integer()->null(),
             static::FIELD_STATE => $this->integer()->notNull()->defaultValue(static::STATE_ENABLED),
             static::FIELD_BLOCKED_AT => $this->datetime()->null(),
         ];
