@@ -71,7 +71,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public function attributeLabels()
     {
-        return ArrayHelper::merge(parent::attributeLabels(), [
+        return $this->_attributeLabels ?: $this->_attributeLabels = ArrayHelper::merge(parent::attributeLabels(), [
 <?php foreach ($labels as $name => $label): ?>
             <?= "'$name' => " . $generator->generateString($label) . ",\n" ?>
 <?php endforeach; ?>
