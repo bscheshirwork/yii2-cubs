@@ -24,12 +24,14 @@ class m170130_100000_createProjectTables extends Migration implements CubsDefaul
 
     public function up()
     {
+        $options = $this->db->driverName == 'mysql' ? 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB' : '';
+        
         $this->createTable('{{%project}}', [
            'id' => $this->primaryKey(),
            'name' => $this->string(64)->notNull(),
            'url' => $this->text(),
            'description' => $this->text(),
-        ]);
+        ], $options);
         $this->createIndex('{{%project_unique_name}}', '{{%project}}', 'name', true);
 
         $this->createTable('{{%project_form}}', [
@@ -39,7 +41,7 @@ class m170130_100000_createProjectTables extends Migration implements CubsDefaul
             'name' => $this->string(64)->null(),
             'url' => $this->text(),
             'description' => $this->text(),
-        ]);
+        ], $options);
         $this->addForeignKey('{{%fk_project_project_form}}', '{{%project_form}}', 'projectId', '{{%project}}', 'id', 'CASCADE', 'CASCADE');
     }
 
@@ -68,7 +70,7 @@ CREATE TABLE `project` (
   `blockedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `project_unique_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
 CREATE TABLE `project_form` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -86,7 +88,7 @@ CREATE TABLE `project_form` (
   PRIMARY KEY (`id`),
   KEY `fk_project_project_form` (`projectId`),
   CONSTRAINT `fk_project_project_form` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 ```
 
 

@@ -176,7 +176,6 @@ trait CubsTrait
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            [['createdAt'], 'required'],
             [['createdAt', 'updatedAt', 'blockedAt'], 'safe'],
             [['createdBy', 'updatedBy', 'stateOfFlags'], 'integer'],
         ]);
