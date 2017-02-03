@@ -244,8 +244,7 @@ The migrations for the existing tables must be created manually.
 
 #i18n
 
-Example `gii`: 
-settings `config/main.php`
+Example settings `config/main.php`
 ```
 ...
     'components' => [
@@ -259,6 +258,24 @@ settings `config/main.php`
         ],
     ],
 ...
+```
+
+#advanced usage
+
+Example view `views/project/view.php`
+```
+    <?= \bscheshirwork\cubs\helpers\WidgetHelper::HtmlBlockButton($model) ?>
+    
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => \yii\helpers\ArrayHelper::merge([
+            'id',
+            'name',
+            'url:ntext',
+            'description:ntext',
+        ], \bscheshirwork\cubs\helpers\WidgetHelper::DetailViewArray($model)),
+    ]) ?>
+
 ```
 
 

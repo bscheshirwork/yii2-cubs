@@ -24,3 +24,7 @@
         ],
     ];
 ```
+
+5.Перевод `i18n`, ключ 'cubs': `Yii::t('cubs', 'Message')`. 
+
+6.Хелпер для использования в виджетах `\bscheshirwork\cubs\helpers\WidgetHelper`, содержащий набор декораторов для работы с полями cubs
