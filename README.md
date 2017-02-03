@@ -260,6 +260,22 @@ Example settings `config/main.php`
 ...
 ```
 
+#formater
+
+Example settings `config/main.php`
+```
+...
+    'components' => [
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php:Y-m-d',
+            'datetimeFormat' => 'php:Y-m-d H:i:s',
+            'timeFormat' => 'php:H:i:s',
+        ],
+    ],
+...
+```
+
 #advanced usage
 
 Example view `views/project/view.php`
