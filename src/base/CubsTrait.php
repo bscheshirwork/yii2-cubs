@@ -171,6 +171,24 @@ trait CubsTrait
     }
 
     /**
+     * Creator relation
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreator()
+    {
+        return $this->hasOne(Yii::$app->get('user')->identityClass, ['id' => static::FIELD_CREATE_BY]);
+    }
+
+    /**
+     * Updater relation
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdater()
+    {
+        return $this->hasOne(Yii::$app->get('user')->identityClass, ['id' => static::FIELD_UPDATE_BY]);
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()

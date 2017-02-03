@@ -38,7 +38,11 @@ use bscheshirwork\cubs\base\CubsTrait;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . ($interfaceName ? ' implements ' . $interfaceName : '' ) . "\n" ?>
 {
-    use CubsTrait;
+    use CubsTrait {
+        rules as rulesTrait;
+        attributeLabels as attributeLabelsTrait;
+        hints as hintsTrait;
+    }
 
     /**
      * @inheritdoc
@@ -63,7 +67,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public function rules()
     {
-        return ArrayHelper::merge(parent::rules(), [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>]);
+        return ArrayHelper::merge(static::rulesTrait(), [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>]);
     }
 
     /**
@@ -71,7 +75,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public function attributeLabels()
     {
-        return $this->_attributeLabels ?: $this->_attributeLabels = ArrayHelper::merge(parent::attributeLabels(), [
+        return $this->_attributeLabels ?: $this->_attributeLabels = ArrayHelper::merge(static::attributeLabelsTrait(), [
 <?php foreach ($labels as $name => $label): ?>
             <?= "'$name' => " . $generator->generateString($label) . ",\n" ?>
 <?php endforeach; ?>
@@ -83,7 +87,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     */
     public function hints()
     {
-        return ArrayHelper::merge(parent::hints(), [
+        return ArrayHelper::merge(static::hintsTrait(), [
         ]);
     }
 <?php foreach ($relations as $name => $relation): ?>
