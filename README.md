@@ -125,7 +125,7 @@ namespace app\models;
 
 use Yii;
 use Yii\helpers\ArrayHelper;
-use bscheshirwork\cubs\base\CubsTrait;
+use bscheshirwork\cubs\base\CubsModelTrait;
 
 /**
  * This is the model class for table "{{%project}}".
@@ -145,7 +145,7 @@ use bscheshirwork\cubs\base\CubsTrait;
  */
 class Project extends \yii\db\ActiveRecord implements \bscheshirwork\cubs\base\CubsDefaultInterface
 {
-    use CubsTrait;
+    use CubsModelTrait;
 
     /**
      * @inheritdoc
@@ -278,6 +278,13 @@ Example view `views/project/view.php`
 
 ```
 
+Example controller `ProjectController`
+```
+class ProjectController extends Controller
+{
+    use \bscheshirwork\cubs\base\CubsControllerTrait;
+...    
+```
 
 
 [Info](docs/cubs.md)

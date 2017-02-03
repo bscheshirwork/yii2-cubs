@@ -21,7 +21,7 @@ namespace <?= $generator->ns ?>;
 
 use Yii;
 use Yii\helpers\ArrayHelper;
-use bscheshirwork\cubs\base\CubsTrait;
+use bscheshirwork\cubs\base\CubsModelTrait;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -38,7 +38,7 @@ use bscheshirwork\cubs\base\CubsTrait;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . ($interfaceName ? ' implements ' . $interfaceName : '' ) . "\n" ?>
 {
-    use CubsTrait {
+    use CubsModelTrait {
         rules as rulesTrait;
         attributeLabels as attributeLabelsTrait;
         hints as hintsTrait;

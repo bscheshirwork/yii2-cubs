@@ -23,7 +23,7 @@ use Yii\helpers\ArrayHelper;
  * Class CubsMigrationTrait
  * @package bscheshirwork\cubs\db
  */
-trait CubsTrait
+trait CubsModelTrait
 {
 
     /**
