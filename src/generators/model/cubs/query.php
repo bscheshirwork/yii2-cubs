@@ -24,13 +24,17 @@ echo "<?php\n";
 
 namespace <?= $generator->queryNs ?>;
 
+use bscheshirwork\cubs\base\CubsQueryModelTrait;
+
 /**
  * This is the ActiveQuery class for [[<?= $modelFullClassName ?>]].
  *
  * @see <?= $modelFullClassName . "\n" ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
+class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . ($interfaceName ? ' implements ' . $interfaceName : '' ) . "\n" ?>
 {
+    use CubsQueryModelTrait;
+
     /*public function active()
     {
         return $this->andWhere('[[status]]=1');
