@@ -108,13 +108,19 @@ settings `config/main-local.php`
                     // or direct
                     // 'cubs' => '@vendor/bscheshirwork/yii2-cubs/src/generators/model/cubs', // template name => path to template
                 ]
-            ]
+            ],
+            'crud' => [
+                'class' => 'bscheshirwork\cubs\generators\crud\Generator',
+                'templates' => [
+                    'default' => '@bscheshirwork/cubs/generators/crud/cubs', 
+                ]
+            ],
         ],
     ];
 
 ...
 ```
-Model Generator `gii/model` have new field;  
+Model Generator `gii/model` and CRUD generator `gii/crud` have new field;  
 check `Cubs`, set `Cubs interface` and select `cubs` template.
 
 Generated the `Project` model like this
@@ -209,6 +215,10 @@ class Project extends \yii\db\ActiveRecord implements \bscheshirwork\cubs\base\C
 }
 
 ```
+
+`ProjectQuery` use `CubsQueryModelTrait`, `ProjectController` use `CubsControllerTrait`, and `ProjectSearch` use `CubsSearchModelTrait`.
+
+
 
 #Customize
 
