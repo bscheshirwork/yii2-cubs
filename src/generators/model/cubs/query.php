@@ -2,6 +2,7 @@
 /**
  * This is the template for generating the ActiveQuery class.
  */
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $generator bscheshirwork\cubs\generators\model\Generator */
@@ -19,21 +20,32 @@ if ($generator->ns !== $generator->queryNs) {
     $modelFullClassName = '\\' . $generator->ns . '\\' . $modelFullClassName;
 }
 
+
 echo "<?php\n";
 ?>
 
 namespace <?= $generator->queryNs ?>;
 
 use bscheshirwork\cubs\base\CubsQueryModelTrait;
+use <?= ltrim($interfaceName, '\\') ?>;
 
 /**
  * This is the ActiveQuery class for [[<?= $modelFullClassName ?>]].
  *
  * @see <?= $modelFullClassName . "\n" ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . ($interfaceName ? ' implements ' . $interfaceName : '' ) . "\n" ?>
+class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
 {
     use CubsQueryModelTrait;
+
+    /**
+     * Model implement <?= StringHelper::basename($interfaceName) . "\n" ?>
+     * @param $model
+     * @return bool
+     */
+    private function checkInterface($model){
+        return $model instanceof <?= StringHelper::basename($interfaceName) ?>;
+    }
 
     /*public function active()
     {

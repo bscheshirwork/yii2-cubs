@@ -29,12 +29,13 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use bscheshirwork\cubs\base\CubsSearchModelTrait;
+use <?= ltrim($interfaceName, '\\') ?>;
 use <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "") ?>;
 
 /**
  * <?= $searchModelClass ?> represents the model behind the search form of `<?= $generator->modelClass ?>`.
  */
-class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $modelClass . ($interfaceName ? ' implements ' . $interfaceName : '' ) ?>
+class <?= $searchModelClass ?> extends <?= (isset($modelAlias) ? $modelAlias : $modelClass) . ' implements ' . StringHelper::basename($interfaceName) ?>
 
 {
     use CubsSearchModelTrait {
@@ -88,7 +89,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         // grid filtering conditions
         <?= implode("\n        ", $searchConditions) ?>
 
-        $query->addCubsSearchCondition();
+        $query->addCubsSearchCondition($this);
 
         return $dataProvider;
     }

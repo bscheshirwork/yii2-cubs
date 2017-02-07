@@ -2,21 +2,31 @@
 
 namespace bscheshirwork\cubs\base;
 
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
  * Class CubsQueryModelTrait
  * @package bscheshirwork\cubs\base
  */
 trait CubsQueryModelTrait
 {
-    public function addCubsSearchCondition(){
-        /** @var \yii\db\ActiveQuery $this */
-        return $this->andFilterWhere([
-            static::FIELD_CREATE_AT => $this->{static::FIELD_CREATE_AT},
-            static::FIELD_CREATE_BY => $this->{static::FIELD_CREATE_BY},
-            static::FIELD_UPDATE_AT => $this->{static::FIELD_UPDATE_AT},
-            static::FIELD_UPDATE_BY => $this->{static::FIELD_UPDATE_BY},
-            static::FIELD_STATE => $this->{static::FIELD_STATE},
-            static::FIELD_BLOCKED_AT => $this->{static::FIELD_BLOCKED_AT},
-        ]);
+    /**
+     * @param ActiveRecord $model
+     * @return $this|ActiveQuery
+     */
+    public function addCubsSearchCondition(ActiveRecord $model): ActiveQuery
+    {
+        if (static::checkInterface($model)){
+            /** @var ActiveQuery $this */
+            return $this->andFilterWhere([
+                $model::FIELD_CREATE_AT => $model->{$model::FIELD_CREATE_AT},
+                $model::FIELD_CREATE_BY => $model->{$model::FIELD_CREATE_BY},
+                $model::FIELD_UPDATE_AT => $model->{$model::FIELD_UPDATE_AT},
+                $model::FIELD_UPDATE_BY => $model->{$model::FIELD_UPDATE_BY},
+                $model::FIELD_STATE => $model->{$model::FIELD_STATE},
+                $model::FIELD_BLOCKED_AT => $model->{$model::FIELD_BLOCKED_AT},
+            ]);
+        }
     }
 }

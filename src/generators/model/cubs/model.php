@@ -2,6 +2,7 @@
 /**
  * This is the template for generating the model class of a specified table.
  */
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $generator bscheshirwork\cubs\generators\model\Generator */
@@ -22,6 +23,7 @@ namespace <?= $generator->ns ?>;
 use Yii;
 use Yii\helpers\ArrayHelper;
 use bscheshirwork\cubs\base\CubsModelTrait;
+use <?= ltrim($interfaceName, '\\') ?>;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -36,7 +38,7 @@ use bscheshirwork\cubs\base\CubsModelTrait;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . ($interfaceName ? ' implements ' . $interfaceName : '' ) . "\n" ?>
+class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . ' implements ' . StringHelper::basename($interfaceName) . "\n" ?>
 {
     use CubsModelTrait {
         rules as rulesTrait;
