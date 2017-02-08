@@ -2,8 +2,6 @@
 
 namespace bscheshirwork\cubs\base;
 
-use yii\helpers\ArrayHelper;
-
 /**
  * Class CubsSearchModelTrait
  * @package bscheshirwork\cubs\base

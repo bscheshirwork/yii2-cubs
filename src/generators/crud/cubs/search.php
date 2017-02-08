@@ -39,7 +39,7 @@ class <?= $searchModelClass ?> extends <?= (isset($modelAlias) ? $modelAlias : $
 
 {
     use CubsSearchModelTrait {
-        rules as rulesTrait;
+        rules as rulesFromTrait;
     }
 
     /**
@@ -47,7 +47,7 @@ class <?= $searchModelClass ?> extends <?= (isset($modelAlias) ? $modelAlias : $
      */
     public function rules()
     {
-        return ArrayHelper::merge(static::rulesTrait(), [
+        return ArrayHelper::merge(static::rulesFromTrait(), [
             <?= implode(",\n            ", $rules) ?>,
         ]);
     }

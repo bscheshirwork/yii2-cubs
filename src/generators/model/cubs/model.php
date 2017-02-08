@@ -41,9 +41,9 @@ use <?= ltrim($interfaceName, '\\') ?>;
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . ' implements ' . StringHelper::basename($interfaceName) . "\n" ?>
 {
     use CubsModelTrait {
-        rules as rulesTrait;
-        attributeLabels as attributeLabelsTrait;
-        hints as hintsTrait;
+        rules as rulesFromTrait;
+        attributeLabels as attributeLabelsFromTrait;
+        hints as hintsFromTrait;
     }
 
     /**
@@ -69,7 +69,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public function rules()
     {
-        return ArrayHelper::merge(static::rulesTrait(), [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>]);
+        return ArrayHelper::merge(static::rulesFromTrait(), [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>]);
     }
 
     /**
@@ -77,7 +77,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public function attributeLabels()
     {
-        return $this->_attributeLabels ?: $this->_attributeLabels = ArrayHelper::merge(static::attributeLabelsTrait(), [
+        return $this->_attributeLabels ?: $this->_attributeLabels = ArrayHelper::merge(static::attributeLabelsFromTrait(), [
 <?php foreach ($labels as $name => $label): ?>
             <?= "'$name' => " . $generator->generateString($label) . ",\n" ?>
 <?php endforeach; ?>
@@ -89,7 +89,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     */
     public function hints()
     {
-        return ArrayHelper::merge(static::hintsTrait(), [
+        return ArrayHelper::merge(static::hintsFromTrait(), [
         ]);
     }
 <?php foreach ($relations as $name => $relation): ?>
