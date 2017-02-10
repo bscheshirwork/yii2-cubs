@@ -28,5 +28,24 @@ trait CubsQueryModelTrait
                 $model::FIELD_BLOCKED_AT => $model->{$model::FIELD_BLOCKED_AT},
             ]);
         }
+        return $this;
     }
+
+    /**
+     * dummy for function name constructor
+     * @return $this
+     */
+    public function nothing(){
+        return $this;
+    }
+
+    /**
+     * Check isActive. Redefine if necessary
+     * @return mixed
+     */
+    public function active()
+    {
+        return $this->andWhere('[[' . ($this->modelClass)::FIELD_STATE . ']]=1');
+    }
+
 }
