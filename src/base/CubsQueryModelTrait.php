@@ -17,7 +17,7 @@ trait CubsQueryModelTrait
      */
     public function addCubsSearchCondition(ActiveRecord $model): ActiveQuery
     {
-        if (static::checkInterface($model)){
+        if (static::checkInterface($model)) {
             /** @var ActiveQuery $this */
             return $this->andFilterWhere([
                 $model::FIELD_CREATE_AT => $model->{$model::FIELD_CREATE_AT},
@@ -35,7 +35,8 @@ trait CubsQueryModelTrait
      * dummy for function name constructor
      * @return $this
      */
-    public function nothing(){
+    public function nothing()
+    {
         return $this;
     }
 
@@ -45,7 +46,7 @@ trait CubsQueryModelTrait
      */
     public function active()
     {
-        return $this->andWhere('[[' . ($this->modelClass)::FIELD_STATE . ']]=1');
+        return $this->andWhere(($this->modelClass)::tableName(). '.[[' . ($this->modelClass)::FIELD_STATE . ']]=1');
     }
 
 }
