@@ -128,7 +128,7 @@ trait CubsModelTrait
     public function behaviors()
     {
         return [
-            [
+            'cubsTimestamp' => [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT],
@@ -136,14 +136,14 @@ trait CubsModelTrait
                 ],
                 'value' => new Expression('NOW()'),
             ],
-            [
+            'cubsBlameable' => [
                 'class' => BlameableBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => [static::FIELD_CREATE_BY, static::FIELD_UPDATE_BY],
                     ActiveRecord::EVENT_BEFORE_UPDATE => [static::FIELD_UPDATE_BY],
                 ],
             ],
-            [
+            'cubsAttribute' => [
                 'class' => AttributeBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => [static::FIELD_BLOCKED_AT],
