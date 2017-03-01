@@ -27,4 +27,5 @@ echo $form->field($generator, 'enableI18N')->checkbox();
 echo $form->field($generator, 'messageCategory');
 echo $form->field($generator, 'useSchemaName')->checkbox();
 echo $form->field($generator, 'enableCubs')->checkbox();
+echo $form->field($generator, 'enableCheckActive')->checkbox();
 echo $form->field($generator, 'cubsInterface');

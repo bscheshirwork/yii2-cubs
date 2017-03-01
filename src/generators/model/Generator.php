@@ -2,9 +2,11 @@
 
 namespace bscheshirwork\cubs\generators\model;
 
+use bscheshirwork\cubs\generators\CubsGeneratorTrait;
 use Yii;
 use yii\db\Schema;
 use yii\gii\CodeFile;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\base\NotSupportedException;
 
@@ -15,7 +17,44 @@ use yii\base\NotSupportedException;
  */
 class Generator extends \yii\gii\generators\model\Generator
 {
-    use \bscheshirwork\cubs\generators\CubsGeneratorTrait;
+    use CubsGeneratorTrait {
+        rules as rulesFromTrait;
+        attributeLabels as attributeLabelsFromTrait;
+        hints as hintsFromTrait;
+    }
+
+    public $enableCheckActive;
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return ArrayHelper::merge(static::rulesFromTrait(), [
+            [['enableCheckActive'], 'boolean'],
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return ArrayHelper::merge(static::attributeLabelsFromTrait(), [
+            'enableCheckActive' => 'Check active',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function hints()
+    {
+        return ArrayHelper::merge(static::hintsFromTrait(), [
+            'enableCubs' => 'This indicates whether the generator should generate rules using <code>active()</code> query filter.
+                Set this to <code>true</code> to add additional parameter <code>filter</code> into exist validator',
+        ]);
+    }
 
     /**
      * @inheritdoc
@@ -181,6 +220,18 @@ class Generator extends \yii\gii\generators\model\Generator
                 continue;
             }
             $refClassName = $this->generateClassName($refTable);
+
+            if (class_exists($refClassName)){
+                $find = $refClassName::find();
+                if ($find::className == 'ActiveQuery'){
+                    $this->enableCheckActive = false;
+                } else {
+                    $refQueryClassName = $find::className;
+                }
+            } else {
+                $refQueryClassName = $refClassName . 'Query';
+            }
+
             unset($refs[0]);
             $attributes = implode("', '", array_keys($refs));
             $targetAttributes = [];
@@ -188,7 +239,18 @@ class Generator extends \yii\gii\generators\model\Generator
                 $targetAttributes[] = "'$key' => '$value'";
             }
             $targetAttributes = implode(', ', $targetAttributes);
-            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+            if ($this->enableCheckActive) {
+                $rules[] = "[['$attributes'], 'exist',
+                'skipOnError' => true,
+                'targetClass' => $refClassName::className(),
+                'targetAttribute' => [$targetAttributes],
+                'filter' => function($refQueryClassName \$query){
+                    \$query->active();
+                }
+            ]";
+            } else {
+                $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+            }
         }
 
         return $rules;
