@@ -21,6 +21,7 @@ class Generator extends \yii\gii\generators\model\Generator
         rules as rulesFromTrait;
         attributeLabels as attributeLabelsFromTrait;
         hints as hintsFromTrait;
+        stickyAttributes as stickyAttributesFromTrait;
     }
 
     public $enableCheckActive;
@@ -51,9 +52,17 @@ class Generator extends \yii\gii\generators\model\Generator
     public function hints()
     {
         return ArrayHelper::merge(static::hintsFromTrait(), [
-            'enableCubs' => 'This indicates whether the generator should generate rules using <code>active()</code> query filter.
+            'enableCheckActive' => 'This indicates whether the generator should generate rules using <code>active()</code> query filter.
                 Set this to <code>true</code> to add additional parameter <code>filter</code> into exist validator',
         ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function stickyAttributes()
+    {
+        return ArrayHelper::merge(static::stickyAttributesFromTrait(), ['useTablePrefix', 'generateQuery', 'enableCheckActive']);
     }
 
     /**
