@@ -198,6 +198,7 @@ class Generator extends \yii\gii\generators\model\Generator
 
         $db = $this->getDbConnection();
 
+
         // Unique indexes rules
         try {
             $uniqueIndexes = $db->getSchema()->findUniqueIndexes($table);
@@ -209,10 +210,8 @@ class Generator extends \yii\gii\generators\model\Generator
                     if ($attributesCount === 1) {
                         $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique']";
                     } elseif ($attributesCount > 1) {
-                        $labels = array_intersect_key($this->generateLabels($table), array_flip($uniqueColumns));
-                        $lastLabel = array_pop($labels);
                         $columnsList = implode("', '", $uniqueColumns);
-                        $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList'], 'message' => 'The combination of " . implode(', ', $labels) . " and $lastLabel has already been taken.']";
+                        $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList']]";
                     }
                 }
             }
