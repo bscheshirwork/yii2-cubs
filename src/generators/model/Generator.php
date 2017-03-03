@@ -198,7 +198,6 @@ class Generator extends \yii\gii\generators\model\Generator
 
         $db = $this->getDbConnection();
 
-
         // Unique indexes rules
         try {
             $uniqueIndexes = $db->getSchema()->findUniqueIndexes($table);
@@ -244,7 +243,11 @@ class Generator extends \yii\gii\generators\model\Generator
             $attributes = implode("', '", array_keys($refs));
             $targetAttributes = [];
             foreach ($refs as $key => $value) {
-                $targetAttributes[] = "'$key' => '$value'";
+                if ($this->enableCheckActive) {
+                    $targetAttributes[] = "'$key' => $refClassName::tableName() . '.$value'";
+                } else {
+                    $targetAttributes[] = "'$key' => '$value'";
+                }
             }
             $targetAttributes = implode(', ', $targetAttributes);
             if ($this->enableCheckActive) {
