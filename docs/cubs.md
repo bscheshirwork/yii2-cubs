@@ -10,7 +10,7 @@
 
 3.Трейт `bscheshirwork\cubs\db\CubsMigrationTrait` для использования в миграциях. Добавляет в команду создания таблицы набор полей.
 
-4.Шаблон генератора `model`
+4.Шаблон генератора `model` и `crud`
 ```
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
@@ -21,6 +21,12 @@
                     'cubs' => '@bscheshirwork/cubs/generators/model/cubs', // template name => path to template
                 ]
             ]
+            'crud' => [
+                'class' => 'bscheshirwork\cubs\generators\crud\Generator',
+                'templates' => [
+                    'default' => '@bscheshirwork/cubs/generators/crud/cubs',
+                ]
+            ],
         ],
     ];
 ```
@@ -56,4 +62,42 @@
         return $this->andWhere(($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]=1');
     }
 
+```
+> Примечание: Как и в любых других случаях использования `joinWith` в результат попадут строки из зависимых таблиц, что
+приводит к неверному трактованию количества элементов. Необходимо дополнить запрос ключевым словом `distinct` для получения
+корректного количества элементов при выборке на "основной" таблице модели с условиями в зависимых таблицах.
+```
+class MainModelSearch extends MainModel
+{
+...
+    public function search($params)
+    {
+        $query = MainModel::find();
+
+        // add conditions that should always apply here
+        $query->hasActiveChild();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+...
+    }
+}
+```
+```
+...
+class MainModelQuery extends \yii\db\ActiveQuery
+{
+
+    public function hasActiveChild($tablePrefix = null)
+    {
+        return $this
+            ->distinct() //don't reduce item on page. Only attributes of main model in result. Distinct of this attribute set
+            ->joinWith([
+                'child' => function(ChildModelQuery $query){
+                    $query->active();
+                },
+            ]);
+    }
+...
 ```
