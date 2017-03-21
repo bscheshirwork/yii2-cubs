@@ -85,8 +85,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     public function hints()
     {
         return ArrayHelper::merge(static::hintsFromTrait(), [
