@@ -43,13 +43,14 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
      * @param $model
      * @return bool
      */
-    private function checkInterface($model){
+    private function checkInterface($model)
+    {
         return $model instanceof <?= StringHelper::basename($interfaceName) ?>;
     }
 
-    /*public function active()
+    /*public function active($tablePrefix = null)
     {
-        return $this->andWhere('[[status]]=1');
+        return $this->andWhere(($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]=1');
     }*/
 
     /**
