@@ -3,6 +3,7 @@
 namespace bscheshirwork\cubs\base;
 
 use Yii;
+use yii\base\Behavior;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -151,6 +152,25 @@ trait CubsModelTrait
                 ],
                 'value' => [$this, 'getActualBlockedAt']
             ],
+            'cubsTimestampExpressionErase' => function () {
+                $attributes = [
+                    ActiveRecord::EVENT_AFTER_INSERT => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT],
+                    ActiveRecord::EVENT_AFTER_UPDATE => [static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT],
+                ];
+                return new class(['attributes' => $attributes]) extends AttributeBehavior {
+                    public function evaluateAttributes($event)
+                    {
+                        if (!empty($this->attributes[$event->name])) {
+                            $attributes = (array) $this->attributes[$event->name];
+                            foreach ($attributes as $attribute) {
+                                if (is_string($attribute) && $this->owner->$attribute instanceof Expression) {
+                                    $this->owner->$attribute = null;
+                                }
+                            }
+                        }
+                    }
+                };
+            },
         ];
     }
 
