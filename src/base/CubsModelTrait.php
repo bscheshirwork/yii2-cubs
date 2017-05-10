@@ -160,7 +160,7 @@ trait CubsModelTrait
                 ];
                 return new class(['attributes' => $attributes]) extends Behavior {
                     public $attributes = [];
-                    private $storedCubsAttributes = [];
+                    public $storedCubsAttributes = [];
                     public function events()
                     {
                         return [
