@@ -86,7 +86,7 @@ trait CubsModelTrait
      */
     public function block()
     {
-        $this->{static::FIELD_STATE} |= static::STATE_BLOCKED;
+        return $this->signOn(static::STATE_BLOCKED);
     }
 
     /**
@@ -94,7 +94,7 @@ trait CubsModelTrait
      */
     public function unblock()
     {
-        $this->{static::FIELD_STATE} &= ~static::STATE_BLOCKED;
+        return $this->signOff(static::STATE_BLOCKED);
     }
 
     /**
@@ -102,7 +102,7 @@ trait CubsModelTrait
      */
     public function enabled()
     {
-        $this->{static::FIELD_STATE} |= static::STATE_ENABLED;
+        return $this->signOn(static::STATE_ENABLED);
     }
 
     /**
@@ -110,16 +110,40 @@ trait CubsModelTrait
      */
     public function disabled()
     {
-        $this->{static::FIELD_STATE} &= ~static::STATE_ENABLED;
+        return $this->signOff(static::STATE_ENABLED);
+    }
+
+    /**
+     * sign on
+     * @param $sign
+     * @return $this
+     */
+    public function signOn($sign = self::STATE_BLOCKED)
+    {
+        $this->{static::FIELD_STATE} |= $sign;
+        return $this;
+    }
+
+    /**
+     * sign off
+     * @param $sign
+     * @return $this
+     */
+    public function signOff($sign = self::STATE_BLOCKED)
+    {
+        $this->{static::FIELD_STATE} &= ~$sign;
+        return $this;
     }
 
     /**
      * sign toggle
      * @param $sign
+     * @return $this
      */
-    public function toggleSign($sign = self::STATE_BLOCKED)
+    public function signToggle($sign = self::STATE_BLOCKED)
     {
         $this->{static::FIELD_STATE} ^= $sign;
+        return $this;
     }
 
     /**
