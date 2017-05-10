@@ -59,7 +59,7 @@ trait CubsModelTrait
      */
     public function isEnabled()
     {
-        return ($this->{static::FIELD_STATE} | static::STATE_ENABLED) == $this->{static::FIELD_STATE};
+        return $this->isSign(static::STATE_ENABLED);
     }
 
     /**
@@ -68,7 +68,7 @@ trait CubsModelTrait
      */
     public function isBlocked()
     {
-        return ($this->{static::FIELD_STATE} | static::STATE_BLOCKED) == $this->{static::FIELD_STATE};
+        return $this->isSign(static::STATE_BLOCKED);
     }
 
     /**
@@ -111,6 +111,26 @@ trait CubsModelTrait
     public function disabled()
     {
         return $this->signOff(static::STATE_ENABLED);
+    }
+
+    /**
+     * Return is sign bits is set
+     * @param $sign
+     * @return bool
+     */
+    public function isSign($sign = self::STATE_BLOCKED)
+    {
+        return ($this->{static::FIELD_STATE} | $sign) == $this->{static::FIELD_STATE};
+    }
+
+    /**
+     * Return is sign bits is not set
+     * @param $sign
+     * @return bool
+     */
+    public function isNotSign($sign = self::STATE_BLOCKED)
+    {
+        return ($this->{static::FIELD_STATE} & ~$sign) == $this->{static::FIELD_STATE};
     }
 
     /**
