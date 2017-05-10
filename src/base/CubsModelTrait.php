@@ -158,16 +158,17 @@ trait CubsModelTrait
                     ActiveRecord::EVENT_AFTER_UPDATE => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT],
                     ActiveRecord::EVENT_AFTER_VALIDATE => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT],
                 ];
-                return new class(['attributes' => $attributes]) extends Behavior {
+                return new class(['attributes' => $attributes]) extends Behavior
+                {
                     public $attributes = [];
                     private $storedCubsAttributes = [];
+
                     public function events()
                     {
                         return [
-                            ActiveRecord::EVENT_AFTER_INSERT => $fn = function ($event)
-                            {
+                            ActiveRecord::EVENT_AFTER_INSERT => $fn = function ($event) {
                                 if (!empty($this->attributes[$event->name])) {
-                                    $attributes = (array) $this->attributes[$event->name];
+                                    $attributes = (array)$this->attributes[$event->name];
                                     foreach ($attributes as $attribute) {
                                         if (is_string($attribute) && $this->owner->$attribute instanceof Expression && !array_key_exists($attribute, $this->owner->dirtyAttributes)) {
                                             $this->storedCubsAttributes[$attribute] = $this->owner->$attribute;
@@ -177,14 +178,13 @@ trait CubsModelTrait
                                 }
                             },
                             ActiveRecord::EVENT_AFTER_UPDATE => $fn,
-                            ActiveRecord::EVENT_AFTER_VALIDATE => function ($event)
-                            {
+                            ActiveRecord::EVENT_AFTER_VALIDATE => function ($event) {
                                 if (!empty($this->attributes[$event->name])) {
-                                    $attributes = (array) $this->attributes[$event->name];
+                                    $attributes = (array)$this->attributes[$event->name];
                                     foreach ($attributes as $attribute) {
                                         if (is_string($attribute) && array_key_exists($attribute, $this->storedCubsAttributes)) {
                                             $this->owner->$attribute = $this->storedCubsAttributes[$attribute];
-                                            unset($this->storedCubsAttributes);
+                                            unset($this->storedCubsAttributes[$attribute]);
                                         }
                                     }
                                 }
