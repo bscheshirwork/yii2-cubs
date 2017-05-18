@@ -243,7 +243,7 @@ class Generator extends \yii\gii\generators\model\Generator
             $attributes = implode("', '", array_keys($refs));
             $targetAttributes = [];
             foreach ($refs as $key => $value) {
-                    $targetAttributes[] = "'$key' => '$value'";
+                $targetAttributes[] = "'$key' => '$value'";
             }
             $targetAttributes = implode(', ', $targetAttributes);
             if ($this->enableCheckActive) {
