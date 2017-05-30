@@ -20,7 +20,6 @@ if ($generator->ns !== $generator->queryNs) {
     $modelFullClassName = '\\' . $generator->ns . '\\' . $modelFullClassName;
 }
 
-
 echo "<?php\n";
 ?>
 
@@ -48,9 +47,20 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
         return $model instanceof <?= StringHelper::basename($interfaceName) ?>;
     }
 
+    /**
+     * return ($this->{static::FIELD_STATE} & ~static::STATE_BLOCKED | static::STATE_ENABLED) == $this->{static::FIELD_STATE};
+     * @param null $tablePrefix
+     * @return $this
+     */
     /*public function active($tablePrefix = null)
     {
-        return $this->andWhere(($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]=1');
+        return $this->andWhere(
+            '(' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]' .
+            ' & ~' . ($this->modelClass)::STATE_BLOCKED .
+            ' | ' . ($this->modelClass)::STATE_ENABLED .
+            ')'.
+            ' = ' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]'
+        );
     }*/
 
     /**
