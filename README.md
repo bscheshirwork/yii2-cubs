@@ -188,8 +188,8 @@ class Project extends \yii\db\ActiveRecord implements \bscheshirwork\cubs\base\C
     }
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     public function hints()
     {
         return ArrayHelper::merge(parent::hints(), [
