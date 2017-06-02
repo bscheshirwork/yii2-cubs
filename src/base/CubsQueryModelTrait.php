@@ -13,19 +13,21 @@ trait CubsQueryModelTrait
 {
     /**
      * @param ActiveRecord $model
+     * @param null $tablePrefix
      * @return $this|ActiveQuery
      */
-    public function addCubsSearchCondition(ActiveRecord $model): ActiveQuery
+    public function addCubsSearchCondition(ActiveRecord $model, $tablePrefix = null): ActiveQuery
     {
+        $alias = ($tablePrefix ?? ($this->modelClass)::tableName()) . '.';
         if (static::checkInterface($model)) {
             /** @var ActiveQuery $this */
             return $this->andFilterWhere([
-                $model::FIELD_CREATE_AT => $model->{$model::FIELD_CREATE_AT},
-                $model::FIELD_CREATE_BY => $model->{$model::FIELD_CREATE_BY},
-                $model::FIELD_UPDATE_AT => $model->{$model::FIELD_UPDATE_AT},
-                $model::FIELD_UPDATE_BY => $model->{$model::FIELD_UPDATE_BY},
-                $model::FIELD_STATE => $model->{$model::FIELD_STATE},
-                $model::FIELD_BLOCKED_AT => $model->{$model::FIELD_BLOCKED_AT},
+                $alias . $model::FIELD_CREATE_AT => $model->{$model::FIELD_CREATE_AT},
+                $alias . $model::FIELD_CREATE_BY => $model->{$model::FIELD_CREATE_BY},
+                $alias . $model::FIELD_UPDATE_AT => $model->{$model::FIELD_UPDATE_AT},
+                $alias . $model::FIELD_UPDATE_BY => $model->{$model::FIELD_UPDATE_BY},
+                $alias . $model::FIELD_STATE => $model->{$model::FIELD_STATE},
+                $alias . $model::FIELD_BLOCKED_AT => $model->{$model::FIELD_BLOCKED_AT},
             ]);
         }
         return $this;
