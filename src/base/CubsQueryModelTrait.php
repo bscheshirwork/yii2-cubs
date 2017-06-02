@@ -61,7 +61,14 @@ trait CubsQueryModelTrait
      */
     public function active($tablePrefix = null)
     {
-        return $this->andWhere(($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]=1');
+        /** @var ActiveQuery $this */
+        return $this->andWhere(
+            '(' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]' .
+            ' & ~' . ($this->modelClass)::STATE_BLOCKED .
+            ' | ' . ($this->modelClass)::STATE_ENABLED .
+            ')'.
+            ' = ' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]'
+        );
     }
 
 }
