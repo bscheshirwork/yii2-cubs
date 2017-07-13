@@ -68,7 +68,7 @@ trait CubsQueryModelTrait
             '(' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]' .
             ' & ~' . ($this->modelClass)::STATE_BLOCKED .
             ' | ' . ($this->modelClass)::STATE_ENABLED .
-            ')'.
+            ')' .
             ' = ' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]'
         );
     }

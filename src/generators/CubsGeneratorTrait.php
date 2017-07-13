@@ -71,7 +71,7 @@ trait CubsGeneratorTrait
     public function validateInterface($attribute)
     {
         $value = $this->$attribute;
-        if (!interface_exists($value, true)){
+        if (!interface_exists($value, true)) {
             $this->addError($attribute, 'Interface must exist and must be available for autoload.');
         }
     }
@@ -82,13 +82,12 @@ trait CubsGeneratorTrait
     public function generateCubsFieldList()
     {
         //get interface const
-        try{
+        try {
             $cubsConstants = (new \ReflectionClass($this->cubsInterface))->getConstants();
-            $this->cubsFieldList = array_flip(array_filter($cubsConstants, function($key){
+            $this->cubsFieldList = array_flip(array_filter($cubsConstants, function ($key) {
                 return substr($key, 0, 6) == 'FIELD_';
             }, ARRAY_FILTER_USE_KEY));
-        }
-        catch (\ReflectionException $exception){
+        } catch (\ReflectionException $exception) {
             return false;
         }
     }

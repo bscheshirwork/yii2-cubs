@@ -24,7 +24,7 @@ class Generator extends \yii\gii\generators\crud\Generator
         $class = $this->modelClass;
         if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
             $tableSchema = $class::getTableSchema();
-            if ($this->enableCubs){
+            if ($this->enableCubs) {
                 $this->generateCubsFieldList();
                 $tableSchema->columns = array_diff_key($tableSchema->columns, $this->cubsFieldList);
             }

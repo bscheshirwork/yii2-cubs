@@ -1,4 +1,5 @@
 <?php
+
 namespace bscheshirwork\cubs\helpers;
 
 use Yii;

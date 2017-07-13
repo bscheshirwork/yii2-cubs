@@ -78,7 +78,7 @@ class Generator extends \yii\gii\generators\model\Generator
             $modelClassName = $this->generateClassName($tableName);
             $queryClassName = ($this->generateQuery) ? $this->generateQueryClassName($modelClassName) : false;
             $tableSchema = $db->getTableSchema($tableName);
-            if($this->enableCubs){
+            if ($this->enableCubs) {
                 $this->generateCubsFieldList();
             }
             $params = [
@@ -228,9 +228,9 @@ class Generator extends \yii\gii\generators\model\Generator
             }
             $refClassName = $this->generateClassName($refTable);
 
-            if (class_exists($refClassName)){
+            if (class_exists($refClassName)) {
                 $find = $refClassName::find();
-                if ($find::className == 'ActiveQuery'){
+                if ($find::className == 'ActiveQuery') {
                     $this->enableCheckActive = false;
                 } else {
                     $refQueryClassName = $find::className;
