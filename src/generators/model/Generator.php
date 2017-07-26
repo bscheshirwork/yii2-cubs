@@ -189,7 +189,11 @@ class Generator extends \yii\gii\generators\model\Generator
             }
         }
         $rules = [];
+        $driverName = $this->getDbDriverName();
         foreach ($types as $type => $columns) {
+            if ($driverName === 'pgsql' && $type === 'integer') {
+                $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => null]";
+            }
             $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
         }
         foreach ($lengths as $length => $columns) {
@@ -200,7 +204,8 @@ class Generator extends \yii\gii\generators\model\Generator
 
         // Unique indexes rules
         try {
-            $uniqueIndexes = $db->getSchema()->findUniqueIndexes($table);
+            $uniqueIndexes = array_merge($db->getSchema()->findUniqueIndexes($table), [$table->primaryKey]);
+            $uniqueIndexes = array_unique($uniqueIndexes, SORT_REGULAR);
             foreach ($uniqueIndexes as $uniqueColumns) {
                 // Avoid validating auto incremental columns
                 if (!$this->isColumnAutoIncremental($table, $uniqueColumns)) {
@@ -251,7 +256,7 @@ class Generator extends \yii\gii\generators\model\Generator
                 'skipOnError' => true,
                 'targetClass' => $refClassName::className(),
                 'targetAttribute' => [$targetAttributes],
-                'filter' => function($refQueryClassName \$query){
+                'filter' => function ($refQueryClassName \$query) {
                     \$query->active();
                 }
             ]";
