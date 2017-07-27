@@ -38,16 +38,6 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
     use CubsQueryModelTrait;
 
     /**
-     * Model implement <?= StringHelper::basename($interfaceName) . "\n" ?>
-     * @param $model
-     * @return bool
-     */
-    private function checkInterface($model)
-    {
-        return $model instanceof <?= StringHelper::basename($interfaceName) ?>;
-    }
-
-    /**
      * return ($this->{static::FIELD_STATE} & ~static::STATE_BLOCKED | static::STATE_ENABLED) == $this->{static::FIELD_STATE};
      * @param null $tablePrefix
      * @return $this

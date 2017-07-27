@@ -12,6 +12,17 @@ use yii\db\ActiveRecord;
 trait CubsQueryModelTrait
 {
     /**
+     * Model implement CubsDefaultInterface
+     * Can be redefine to check another interface with fields definitions
+     * @param $model
+     * @return bool
+     */
+    protected function checkCubsInterface($model)
+    {
+        return $model instanceof CubsDefaultInterface;
+    }
+
+    /**
      * @param ActiveRecord $model
      * @param null $tablePrefix
      * @return $this|ActiveQuery
@@ -19,7 +30,7 @@ trait CubsQueryModelTrait
     public function addCubsSearchCondition(ActiveRecord $model, $tablePrefix = null): ActiveQuery
     {
         $alias = ($tablePrefix ?? ($this->modelClass)::tableName()) . '.';
-        if (static::checkInterface($model)) {
+        if (static::checkCubsInterface($model)) {
             /** @var ActiveQuery $this */
             return $this->andFilterWhere([
                 $alias . $model::FIELD_CREATE_AT => $model->{$model::FIELD_CREATE_AT},
