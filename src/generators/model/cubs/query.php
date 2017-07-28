@@ -26,6 +26,7 @@ echo "<?php\n";
 namespace <?= $generator->queryNs ?>;
 
 use bscheshirwork\cubs\base\CubsQueryModelTrait;
+use <?= ltrim($interfaceName, '\\') ?>;
 
 /**
  * This is the ActiveQuery class for [[<?= $modelFullClassName ?>]].
