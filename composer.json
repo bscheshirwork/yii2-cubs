@@ -15,11 +15,24 @@
             "bscheshirwork\\cubs\\": "src\\"
         }
     },
+    "minimum-stability": "dev",
     "require": {
         "php": ">=7.0.0",
         "yiisoft/yii2": "@dev"
     },
     "require-dev": {
-        "yiisoft/yii2-gii": "~2.0.0"
-    }
+        "yiisoft/yii2-gii": "@dev"
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
