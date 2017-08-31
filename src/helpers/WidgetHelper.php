@@ -12,7 +12,7 @@ namespace bscheshirwork\cubs\helpers;
  * This class will then be set up to replace the original implementation of the framework.
  *
  * The following example shows how to customize the updaterValue() method of the bscheshirwork\cubs\helpers\WidgetHelper
- * class (the new method will be called in the DetailViewArray method):
+ * class (the new method will be called in the detailViewArray method):
  *
  * <?php
  * namespace bscheshirwork\cubs\helpers;
