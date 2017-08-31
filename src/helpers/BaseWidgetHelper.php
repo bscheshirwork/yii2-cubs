@@ -23,12 +23,12 @@ class BaseWidgetHelper
      *        'name',
      *        'url:ntext',
      *        'description:ntext',
-     *       ], \bscheshirwork\cubs\helpers\WidgetHelper::DetailViewArray($model)),
+     *       ], \bscheshirwork\cubs\helpers\WidgetHelper::detailViewArray($model)),
      * ]) ?>
      * @param $model Yii\base\model
      * @return array
      */
-    public static function DetailViewArray($model)
+    public static function detailViewArray($model)
     {
         return [
             'createdAt',
@@ -96,12 +96,12 @@ class BaseWidgetHelper
 
     /**
      * Return html representation of the button, routed ['block|unblock', 'id' => $model->id]
-     * Usage in view <?= \bscheshirwork\cubs\helpers\WidgetHelper::HtmlBlockButton($model) ?>
+     * Usage in view <?= \bscheshirwork\cubs\helpers\WidgetHelper::htmlBlockButton($model) ?>
      * @param $model
      * @param array $title array of customization the label on the button ['Unblock'=>'Block it!', 'Block' => Yii::t('someone', 'Block')]
      * @return string
      */
-    public static function HtmlBlockButton($model, $title = [])
+    public static function htmlBlockButton($model, $title = [])
     {
         return $model->isBlocked()
             ? Html::a($title['Unblock'] ?: Yii::t('cubs', 'Unblock'), ['unblock', 'id' => $model->id], ['class' => 'btn btn-info'])

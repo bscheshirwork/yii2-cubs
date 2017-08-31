@@ -27,7 +27,12 @@ trait CubsGeneratorTrait
     {
         return array_merge(parent::rules(), [
             [['enableCubs'], 'boolean'],
-            [['cubsInterface'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [
+                ['cubsInterface'],
+                'match',
+                'pattern' => '/^[\w\\\\]+$/',
+                'message' => 'Only word characters and backslashes are allowed.',
+            ],
             [['cubsInterface'], 'validateInterface'],
         ]);
     }
@@ -90,6 +95,8 @@ trait CubsGeneratorTrait
         } catch (\ReflectionException $exception) {
             return false;
         }
+
+        return true;
     }
 
 }

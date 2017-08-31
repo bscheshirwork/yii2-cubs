@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= "<?= " ?>WidgetHelper::HtmlBlockButton($model) ?>
+        <?= "<?= " ?>WidgetHelper::htmlBlockButton($model) ?>
     </p>
 
     <?= "<?= " ?>DetailView::widget([
@@ -54,7 +54,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     }
 }
 ?>
-        ], WidgetHelper::DetailViewArray($model)),
+        ], WidgetHelper::detailViewArray($model)),
     ]) ?>
 
 </div>

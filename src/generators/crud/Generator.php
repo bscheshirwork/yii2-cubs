@@ -28,6 +28,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                 $this->generateCubsFieldList();
                 $tableSchema->columns = array_diff_key($tableSchema->columns, $this->cubsFieldList);
             }
+
             return $tableSchema;
         } else {
             return false;
