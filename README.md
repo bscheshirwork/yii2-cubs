@@ -314,6 +314,7 @@ class ProjectController extends Controller
 
 
 [Info](docs/cubs.md)
+[How to create yii2 extentions tests](docs/tests.md)
 
 #Installation
 Add to you `require` section `composer.json`
