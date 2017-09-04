@@ -153,7 +153,7 @@ class Generator extends \yii\gii\generators\model\Generator
     {
         $labels = [];
         foreach ($table->columns as $column) {
-            if ($this->cubsFieldList[$column->name]) {
+            if ($this->cubsFieldList[$column->name] ?? false) {
                 continue;
             }
             if ($this->generateLabelsFromComments && !empty($column->comment)) {
@@ -183,7 +183,7 @@ class Generator extends \yii\gii\generators\model\Generator
         $types = [];
         $lengths = [];
         foreach ($table->columns as $column) {
-            if ($this->cubsFieldList[$column->name]) {
+            if ($this->cubsFieldList[$column->name] ?? false) {
                 continue;
             }
             if ($column->autoIncrement) {
