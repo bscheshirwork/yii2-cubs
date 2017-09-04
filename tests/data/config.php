@@ -26,24 +26,6 @@ $config = [
     ],
 ];
 
-$config['modules']['gii'] = [
-    'class' => 'yii\gii\Module',
-    'generators' => [
-        'model' => [ // generator name
-            'class' => \bscheshirwork\cubs\generators\model\Generator::class,
-            'templates' => [
-                'default' => '@bscheshirwork/cubs/generators/model/cubs', // template name => alias + path to template
-            ]
-        ],
-        'crud' => [
-            'class' => \bscheshirwork\cubs\generators\crud\Generator::class,
-            'templates' => [
-                'default' => '@bscheshirwork/cubs/generators/crud/cubs',
-            ]
-        ],
-    ],
-];
-
 if (is_file(__DIR__ . '/config.local.php')) {
     include(__DIR__ . '/config.local.php');
 }

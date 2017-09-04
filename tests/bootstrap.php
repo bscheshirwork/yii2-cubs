@@ -12,6 +12,6 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
 Yii::setAlias('@bscheshirwork/cubs/tests/unit', __DIR__);
-//Yii::setAlias('@bscheshirwork/cubs', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src'); // will be redefine from vendors
+//Yii::setAlias('@bscheshirwork/cubs', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src'); // will be redefine in src/generators/CubsGeneratorTrait.php:19
 Yii::setAlias('@bscheshirwork/cubs/generators', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'generators');
 require_once(__DIR__ . '/compatibility.php');
