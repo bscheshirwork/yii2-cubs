@@ -6,7 +6,7 @@
 version: '2'
 services:
   php:
-    image: bscheshir/codeception:php7.1.8-fpm-yii2 #contain phpunit
+    image: bscheshir/codeception:php7.1.9-fpm-yii2 #contain phpunit
     volumes:
       - ..:/project #src and tests shared to container
       - ~/.composer/cache:/root/.composer/cache
@@ -14,3 +14,20 @@ services:
       TZ: Europe/Moscow
       XDEBUG_CONFIG: "remote_host=192.168.0.83 remote_port=9002 remote_enable=On"
       PHP_IDE_CONFIG: "serverName=codeception"
+# example for pgsql
+# also add ./tests/data/config.local.php
+# <?php
+# $config['databases']['pgsql']['dsn'] = 'pgsql:host=pgsql;port=5432;dbname=yii2advanced';
+# $config['databases']['pgsql']['username'] = 'yii2advanced';
+# $config['databases']['pgsql']['password'] = 'yii2advanced';
+#
+# Add to end of this file new service and set depends_on it
+#    depends_on:
+#      - pgsql
+#  pgsql:
+#    image: postgres:9.6.5
+#    environment:
+#      TZ: Europe/Moscow
+#      POSTGRES_PASSWORD: yii2advanced
+#      POSTGRES_DB: yii2advanced
+#      POSTGRES_USER: yii2advanced
