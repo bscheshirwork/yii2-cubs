@@ -17,9 +17,9 @@ services:
 # example for pgsql
 # also add ./tests/data/config.local.php
 # <?php
-# $config['databases']['pgsql']['dsn'] = 'pgsql:host=pgsql;port=5432;dbname=yii2advanced';
-# $config['databases']['pgsql']['username'] = 'yii2advanced';
-# $config['databases']['pgsql']['password'] = 'yii2advanced';
+# $config['databases']['pgsql']['dsn'] = 'pgsql:host=pgsql;port=5432;dbname=yiitest';
+# $config['databases']['pgsql']['username'] = 'postgres';
+# $config['databases']['pgsql']['password'] = 'postgres';
 #
 # Add to end of this file new service and set depends_on it
 #    depends_on:
@@ -28,6 +28,6 @@ services:
 #    image: postgres:9.6.5
 #    environment:
 #      TZ: Europe/Moscow
-#      POSTGRES_PASSWORD: yii2advanced
-#      POSTGRES_DB: yii2advanced
-#      POSTGRES_USER: yii2advanced
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: yiitest
+#      POSTGRES_USER: postgres

@@ -87,6 +87,12 @@ Yii::setAlias('@yii/gii', dirname(__DIR__)); // алиас такой же, ка
 В качестве примера послужит тест генераторов: `tests/GeneratorsTest.php` и класс модели для теста генерации контроллера 
 CRUD над моделью `tests/Profile.php` - оба также помещаем в выбраный немспейс для тестов.
 
+Конфиурация представлена двумя файлами `tests/data/config.php` а также добавленного в `.gitignore`
+`tests/data/config.local.php`, переопределяющего элементы для использования в локальном тестировании посредством `Docker`а
+```php
+<?php
+$config['databases']['redis']['hostname'] = 'redis';
+```
 
 ## Travis CI
 
@@ -160,7 +166,7 @@ master out-of-index fix
     Compare bb8dd6d..0975aa6
     Branch master
 
-bscheshirwork avatar bscheshirwork authored and committed
+bscheshirwork authored and committed
 #7 passed
 
     Ran for 48 sec
@@ -215,12 +221,14 @@ services:
 ### Удалённая интерпритация с помощью `Docker`а
 
 1. Вы можете добавить новый интерпритатор, выбрав в настройках (File->Settings...)
-`Languages & Frameworks`, главную ветку `PHP` (не раворачивая), на этой странице кликните кнопку […] после выпадающего списка `CLI interpreter`.
-После чего нажмите зелёный плюс [+] и выбирете удалённый (From Docker, Vagrat, VM, Remote).
-На данной странице выберете `Docker` либо `Docker-compose`
-![Docker-1](https://d3nmt5vlzunoa1.cloudfront.net/phpstorm/files/2016/11/Docker-2016.3.png)
+`Languages & Frameworks`, главную ветку `PHP` (не раворачивая), на этой странице кликните кнопку […] после выпадающего списка `CLI interpreter`.  
+![default](https://user-images.githubusercontent.com/5769211/30320405-2c3c3bf2-97bb-11e7-96ac-649beb63d8fa.png)
+После чего нажмите зелёный плюс [+] и выбирете удалённый (From Docker, Vagrat, VM, Remote).  
+![default](https://user-images.githubusercontent.com/5769211/30320451-53d58a56-97bb-11e7-8db0-1247ca145f98.png)
+На данной странице выберете `Docker` либо `Docker-compose`  
+![default](https://user-images.githubusercontent.com/5769211/30320664-fea2d984-97bb-11e7-8623-f1b2326a159a.png)
 
-В данном меню, во-первых, выберете подключение к службе Docker, к примеру это будет `unix socket`. 
+В появившемия меню, во-первых, выберете подключение к службе Docker, к примеру это будет `unix socket`.  
 > Уже после этого будет появлятся встроенные инструменты для работы с докером (по умолчанию - внизу, возле отладки, контроля версий, терминала)
 
 Тепрь выберете образ, который будет использоватся для создания контейнера с PHP и, при необходимости, путь к установке PHP
@@ -231,7 +239,7 @@ services:
 Указываем расположение `./tests/docker-compose.yml` - будет взято относительно корня проекта.
 
 Нажатие стрелочек "обновить" рядом с `PHP executable` = `php` даст информацию о версии php. Применяем изменения и следуем далее.
-![Docker-2](https://d3nmt5vlzunoa1.cloudfront.net/phpstorm/files/2016/11/2106.3-Docker-2.png)
+![default](https://user-images.githubusercontent.com/5769211/30320717-28622e14-97bc-11e7-9e29-f6ad481c9913.png)
 
 `PHPStorm` создаст свой собственный контейнер на основании предоставленных данных, названый набодобие `/phpstorm_helpers_PS-172.3968.35`
 Для проверок также будут созданы контейнеры `/tests_php_run_1`..`/tests_php_run_n` либо `/c178145a759e_tests_php_1` которые, как не странно, копятся.
@@ -240,8 +248,10 @@ services:
 
 2. Далее в опциях (File->Settings...) находим фреймворки тестирования `Languages & Frameworks`, `PHP` ветка `Test Frameworks`  
 В ней добавляем `PHPUnit by remote interpreter`, используя кнопку зелёного плюса [+] и выпадающее меню.  
-Указываем тип, созданный в предыдущем пункте:
-![Docker-3](https://d3nmt5vlzunoa1.cloudfront.net/phpstorm/files/2016/11/Docker-2016.3-3.png)
+![default](https://user-images.githubusercontent.com/5769211/30320887-c172d270-97bc-11e7-9896-6b8941ae6724.png)
+Указываем тип, созданный в предыдущем пункте, переходем к следующим настройкам:  
+![default](https://user-images.githubusercontent.com/5769211/30320944-fbe5061c-97bc-11e7-93df-c26784c5ec75.png)
+
 Важно! Указываем путь ВНУТРИ контейнера к тому месту, где установлен PHPUnit либо к автозагрузчику `composer`а, 
 его содержащего. Для используемого образа этот путь равен `/repo/vendor/autoload.php`
 
@@ -252,24 +262,23 @@ services:
 
 Вы можете добавить новую конфигурацию используя кнопку плюс [+] и выбрав PHPUnit (в конце списка).
 
-![Docker-4](https://d3nmt5vlzunoa1.cloudfront.net/phpstorm/files/2016/11/Docker-2016.3-4.png)
+![default](https://user-images.githubusercontent.com/5769211/30321020-41c3e4be-97bd-11e7-93a4-e076ccd66008.png)
 
 В данном меню выберем необходимый нам файл конфигурации для тестов. Выберем использование альтернативного файла 
 конфигурации соответствующей галочкой В данном меню выбор происходит относительно машины разработчика, 
 не относительно контейнера. 
+![default](https://user-images.githubusercontent.com/5769211/30321157-bbf60ac8-97bd-11e7-8769-510a0646997a.png)
+
+Применяем изменения и возвращаемся в главное окно IDE.
+
 Наконец-то можно подтвердить изменения и запустить тесты с помощью кнопки с изображением зелёного треугольника...
 
 Но сначала нужно установить зависимости того кода, который мы будем тестировать. Для установки зависимостей `composer`а 
 воспользуемся всё тем же образом и композицеей, которые использовали для создания образа тестов.
-Запустим оболочку:
+Запустим в контейнере `composer update`:
 ```sh
-$ docker-compose -f ./tests/docker-compose.yml run --rm --entrypoint bash php
+$ docker-compose -f ./tests/docker-compose.yml run --rm --entrypoint composer php update -vvv
 ```
-Выполним `composer install` и подождём установки пакетов.
-```sh
-root@5eecd184daeb:/project# 
-```
-После чего покинем контейнер (`exit`) и, наконец-то, сможем воспользоватся инструментом тестирования.
 
 Напоминаю, что ими будет считатся методы, начинающиеся на `test` классов-наследников `\PHPUnit\Framework\TestCase` в файлах `*Test.php` папки `tests`.
 
