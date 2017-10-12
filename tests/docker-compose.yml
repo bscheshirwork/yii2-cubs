@@ -1,12 +1,12 @@
 # Local run unit tests
-# for docker-compose CLI like this manual https://blog.jetbrains.com/phpstorm/2016/11/docker-remote-interpreters/
+# for docker-compose CLI like this manual https://github.com/bscheshirwork/yii2-cubs/blob/master/docs/tests.md
 # run directly:
 # docker-compose -f ./tests/docker-compose.yml run --rm --entrypoint bash php
 # and run `composer install` before first time use
 version: '2'
 services:
   php:
-    image: bscheshir/codeception:php7.1.9-fpm-yii2 #contain phpunit
+    image: bscheshir/codeception:php7.1.10-fpm-yii2 #contain phpunit
     volumes:
       - ..:/project #src and tests shared to container
       - ~/.composer/cache:/root/.composer/cache
