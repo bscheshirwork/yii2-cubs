@@ -141,6 +141,7 @@ trait CubsModelTrait
     public function signOn($sign = self::STATE_BLOCKED)
     {
         $this->{static::FIELD_STATE} |= $sign;
+
         return $this;
     }
 
@@ -152,6 +153,7 @@ trait CubsModelTrait
     public function signOff($sign = self::STATE_BLOCKED)
     {
         $this->{static::FIELD_STATE} &= ~$sign;
+
         return $this;
     }
 
@@ -163,6 +165,7 @@ trait CubsModelTrait
     public function signToggle($sign = self::STATE_BLOCKED)
     {
         $this->{static::FIELD_STATE} ^= $sign;
+
         return $this;
     }
 
@@ -194,14 +197,27 @@ trait CubsModelTrait
                     ActiveRecord::EVENT_BEFORE_INSERT => [static::FIELD_BLOCKED_AT],
                     ActiveRecord::EVENT_BEFORE_UPDATE => [static::FIELD_BLOCKED_AT],
                 ],
-                'value' => [$this, 'getActualBlockedAt']
+                'value' => [$this, 'getActualBlockedAt'],
             ],
             'cubsTimestampExpressionErase' => function () {
                 $attributes = [
-                    ActiveRecord::EVENT_AFTER_INSERT => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT],
-                    ActiveRecord::EVENT_AFTER_UPDATE => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT],
-                    ActiveRecord::EVENT_AFTER_VALIDATE => [static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT],
+                    ActiveRecord::EVENT_AFTER_INSERT => [
+                        static::FIELD_CREATE_AT,
+                        static::FIELD_UPDATE_AT,
+                        static::FIELD_BLOCKED_AT,
+                    ],
+                    ActiveRecord::EVENT_AFTER_UPDATE => [
+                        static::FIELD_CREATE_AT,
+                        static::FIELD_UPDATE_AT,
+                        static::FIELD_BLOCKED_AT,
+                    ],
+                    ActiveRecord::EVENT_AFTER_VALIDATE => [
+                        static::FIELD_CREATE_AT,
+                        static::FIELD_UPDATE_AT,
+                        static::FIELD_BLOCKED_AT,
+                    ],
                 ];
+
                 return new class(['attributes' => $attributes]) extends Behavior
                 {
                     public $attributes = [];
@@ -214,7 +230,8 @@ trait CubsModelTrait
                                 if (!empty($this->attributes[$event->name])) {
                                     $attributes = (array)$this->attributes[$event->name];
                                     foreach ($attributes as $attribute) {
-                                        if (is_string($attribute) && $this->owner->$attribute instanceof Expression && !array_key_exists($attribute, $this->owner->dirtyAttributes)) {
+                                        if (is_string($attribute) && $this->owner->$attribute instanceof Expression && !array_key_exists($attribute,
+                                                $this->owner->dirtyAttributes)) {
                                             $this->storedCubsAttributes[$attribute] = $this->owner->$attribute;
                                             $this->owner->$attribute = null;
                                         }
@@ -226,7 +243,8 @@ trait CubsModelTrait
                                 if (!empty($this->attributes[$event->name])) {
                                     $attributes = (array)$this->attributes[$event->name];
                                     foreach ($attributes as $attribute) {
-                                        if (is_string($attribute) && array_key_exists($attribute, $this->storedCubsAttributes)) {
+                                        if (is_string($attribute) && array_key_exists($attribute,
+                                                $this->storedCubsAttributes)) {
                                             $this->owner->$attribute = $this->storedCubsAttributes[$attribute];
                                             unset($this->storedCubsAttributes[$attribute]);
                                         }
@@ -247,13 +265,15 @@ trait CubsModelTrait
      */
     public function getActualBlockedAt($event)
     {
-        if ($this->isBlocked())
-            if (empty($this->{static::FIELD_BLOCKED_AT}))
+        if ($this->isBlocked()) {
+            if (empty($this->{static::FIELD_BLOCKED_AT})) {
                 return $this->{static::FIELD_UPDATE_AT};
-            else
+            } else {
                 return $this->{static::FIELD_BLOCKED_AT};
-        else
+            }
+        } else {
             return null;
+        }
     }
 
     /**
@@ -292,12 +312,12 @@ trait CubsModelTrait
     public function attributeLabels()
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
-            'createdAt' => Yii::t('cubs', 'Created At'),
-            'createdBy' => Yii::t('cubs', 'Created By'),
-            'updatedAt' => Yii::t('cubs', 'Updated At'),
-            'updatedBy' => Yii::t('cubs', 'Updated By'),
-            'stateOfFlags' => Yii::t('cubs', 'State Of Flags'),
-            'blockedAt' => Yii::t('cubs', 'Blocked At'),
+            static::FIELD_CREATE_AT => Yii::t('cubs', 'Created At'),
+            static::FIELD_CREATE_BY => Yii::t('cubs', 'Created By'),
+            static::FIELD_UPDATE_AT => Yii::t('cubs', 'Updated At'),
+            static::FIELD_UPDATE_BY => Yii::t('cubs', 'Updated By'),
+            static::FIELD_STATE => Yii::t('cubs', 'State Of Flags'),
+            static::FIELD_BLOCKED_AT => Yii::t('cubs', 'Blocked At'),
         ]);
     }
 
@@ -307,13 +327,32 @@ trait CubsModelTrait
     public function hints()
     {
         return ArrayHelper::merge(parent::hints(), [
-            'createdAt' => Yii::t('cubs', 'Created at'),
-            'createdBy' => Yii::t('cubs', 'Author'),
-            'updatedAt' => Yii::t('cubs', 'Updated at'),
-            'updatedBy' => Yii::t('cubs', 'Updater'),
-            'stateOfFlags' => Yii::t('cubs', 'Status of the model'),
-            'blockedAt' => Yii::t('cubs', 'Blocked at'),
+            static::FIELD_CREATE_AT => Yii::t('cubs', 'Created at'),
+            static::FIELD_CREATE_BY => Yii::t('cubs', 'Author'),
+            static::FIELD_UPDATE_AT => Yii::t('cubs', 'Updated at'),
+            static::FIELD_UPDATE_BY => Yii::t('cubs', 'Updater'),
+            static::FIELD_STATE => Yii::t('cubs', 'Status of the model'),
+            static::FIELD_BLOCKED_AT => Yii::t('cubs', 'Blocked at'),
         ]);
     }
 
+    /**
+     * Return cubs field names. Use it in fields like this
+     * public function fields()
+     * {
+     *     return array_diff(parent::fields(), parent::cubsFields());
+     * }
+     * @return array
+     */
+    public function cubsFields()
+    {
+        return [
+            static::FIELD_CREATE_AT => static::FIELD_CREATE_AT,
+            static::FIELD_CREATE_BY => static::FIELD_CREATE_BY,
+            static::FIELD_UPDATE_AT => static::FIELD_UPDATE_AT,
+            static::FIELD_UPDATE_BY => static::FIELD_UPDATE_BY,
+            static::FIELD_STATE => static::FIELD_STATE,
+            static::FIELD_BLOCKED_AT => static::FIELD_BLOCKED_AT,
+        ];
+    }
 }
