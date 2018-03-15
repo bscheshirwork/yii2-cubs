@@ -129,7 +129,7 @@ class Generator extends \yii\gii\generators\model\Generator
                 if (class_exists($queryClassRealName, true) && is_subclass_of($queryClassRealName, '\yii\db\BaseActiveRecord')) {
                     /** @var \yii\db\ActiveQuery $activeQuery */
                     $activeQuery = $queryClassRealName::find();
-                    $activeQueryClass = $activeQuery::className();
+                    $activeQueryClass = get_class($activeQuery);
                     if(strpos($activeQueryClass, $this->ns) === 0){
                         $activeQueryClass = StringHelper::basename($activeQueryClass);
                     }
@@ -287,14 +287,14 @@ class Generator extends \yii\gii\generators\model\Generator
             if ($this->enableCheckActive) {
                 $rules[] = "[['$attributes'], 'exist',
                 'skipOnError' => true,
-                'targetClass' => $refClassName::className(),
+                'targetClass' => $refClassName::class,
                 'targetAttribute' => [$targetAttributes],
                 'filter' => function ($refQueryClassName \$query) {
                     \$query->active();
                 }
             ]";
             } else {
-                $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+                $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::class, 'targetAttribute' => [$targetAttributes]]";
             }
         }
 

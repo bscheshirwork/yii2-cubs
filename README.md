@@ -1,7 +1,7 @@
 # yii2-cubs
 Trait for AR. Include [create|update][At|By], flags and blockAt fields
 
-##NO MORE ambigous field list!
+## NO MORE monstrous field list!
 
 Many similar AR classes? Already have the specific parent class? 
 
@@ -201,7 +201,7 @@ class Project extends \yii\db\ActiveRecord implements \bscheshirwork\cubs\base\C
      */
     public function getProjectForms()
     {
-        return $this->hasMany(ProjectForm::className(), ['projectId' => 'id']);
+        return $this->hasMany(ProjectForm::class, ['projectId' => 'id']);
     }
 
     /**

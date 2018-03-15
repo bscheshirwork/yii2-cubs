@@ -193,7 +193,7 @@ PHPStorm, попробуйте её.
 version: '2'
 services:
   php:
-    image: bscheshir/codeception:php7.1.9-fpm-yii2 #contain phpunit
+    image: bscheshir/codeception:php7.2.3-fpm-alpine-yii2 #contain phpunit
     volumes:
       - ..:/project #src and tests shared to container
       - ~/.composer/cache:/root/.composer/cache
