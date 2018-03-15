@@ -79,6 +79,9 @@ class Generator extends \yii\gii\generators\model\Generator
             $modelClassName = $this->generateClassName($tableName);
             $queryClassName = ($this->generateQuery) ? $this->generateQueryClassName($modelClassName) : false;
             $tableRelations = isset($relations[$tableName]) ? $relations[$tableName] : [];
+            array_walk($tableRelations, function (&$value){
+                $value[0] = strtr($value[0], ['::className()' => '::class']);
+            });
             $tableSchema = $db->getTableSchema($tableName);
             if ($this->enableCubs) {
                 $this->generateCubsFieldList();
