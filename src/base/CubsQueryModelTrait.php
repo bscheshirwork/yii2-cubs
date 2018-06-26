@@ -84,4 +84,36 @@ trait CubsQueryModelTrait
         );
     }
 
+    /**
+     * Add condition to check is sign set in
+     * @param int $sign the checking sign (for example Model::STATE_BLOCKED)
+     * @param null $tablePrefix
+     * @return $this
+     */
+    public function isSign(int $sign, $tablePrefix = null)
+    {
+        return $this->andWhere(
+            '(' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]' .
+            ' | ' . $sign .
+            ')' .
+            ' = ' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]'
+        );
+    }
+
+    /**
+     * Add condition to check is sign not set in
+     * @param int $sign the checking sign (for example Model::STATE_BLOCKED)
+     * @param null $tablePrefix
+     * @return $this
+     */
+    public function isNotSign(int $sign, $tablePrefix = null)
+    {
+        return $this->andWhere(
+            '(' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]' .
+            ' & ~' . $sign .
+            ')' .
+            ' = ' . ($tablePrefix ?: ($this->modelClass)::tableName()) . '.[[' . ($this->modelClass)::FIELD_STATE . ']]'
+        );
+    }
+
 }
