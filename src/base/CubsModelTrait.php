@@ -279,6 +279,7 @@ trait CubsModelTrait
     /**
      * Creator relation
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getCreator()
     {
@@ -288,6 +289,7 @@ trait CubsModelTrait
     /**
      * Updater relation
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getUpdater()
     {
@@ -301,7 +303,7 @@ trait CubsModelTrait
     {
         return ArrayHelper::merge(parent::rules(), [
             [[static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT], 'default', 'value' => null],
-            [[static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT], 'datetime'],
+            [[static::FIELD_CREATE_AT, static::FIELD_UPDATE_AT, static::FIELD_BLOCKED_AT], 'datetime', 'format' => 'php:Y-m-d H:i:s'], //MySQL friendly format
             [[static::FIELD_CREATE_BY, static::FIELD_UPDATE_BY, static::FIELD_STATE], 'integer'],
         ]);
     }
